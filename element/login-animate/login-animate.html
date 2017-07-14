@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="bounce-in-animation.html">
+
+
+<dom-module id="login-animate">
+    <style>
+        :host {
+            display: none;
+            font-family: Roboto, Helvetica, Arial, sans-serif;
+            background: #DCEDC8;
+            text-align: left;
+        }
+        paper-material {
+            padding: 16px;
+            width: 300px;
+        }
+    </style>
+
+    <template>
+        <paper-material elevation="1">
+            <h2>Sign In</h2>
+            <div>
+                <paper-input label="Username"></paper-input>
+            </div>
+            <div>
+                <paper-input label="Password"></paper-input>
+            </div>
+        </paper-material>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'login-animate',
+            behaviors: [Polymer.NeonAnimationRunnerBehavior],
+            properties: {
+                opened: {
+                    type: Boolean
+                },
+                animationConfig: {
+                    value: function() {
+                        return {
+                            'entry': {
+                                name: 'bounce-in-animation',
+                                node: this,
+                                timing: {duration: 1000}
+                            },
+                            'exit': {
+                                name: 'fade-out-animation',
+                                node: this
+                            }
+                        }
+                    }
+                }
+            },
+            listeners: {
+                'neon-animation-finish': '_onNeonAnimationFinish'
+            },
+            show: function() {
+                this.opened = true;
+                this.style.display = 'inline-block';
+                this.cancelAnimation();
+                this.playAnimation('entry');
+            },
+            hide: function() {
+                this.opened = false;
+                this.cancelAnimation();
+                this.playAnimation('exit');
+            },
+            _onNeonAnimationFinish: function() {
+                if (!this.opened) {
+                    this.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+
+</dom-module>

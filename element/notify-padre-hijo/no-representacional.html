@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="rompe-cadena-no-representacional">
+    <template>
+        template-bind no representacional tow-binding
+    </template>
+    <script>
+        Polymer({
+            is: 'rompe-cadena-no-representacional',
+            properties: {
+                len: {
+                    type: Number,
+                },
+                str: {
+                    type: String,
+                },
+                recorte: {
+                    type: String,
+                    computed: 'calculaRecorte(len, str)',
+                    readOnly: true,
+                    notify: true,
+                },
+                resajax: {
+                    type: String,
+                    readOnly: false,
+                    notify: true,
+                },
+                resajax2: {
+                    type: String,
+                    readOnly: false,
+                    notify: true,
+                },
+            },
+            ready:function () {
+                this.resajax="display:none;";
+                this.resajax2="blue";
+            },
+            calculaRecorte(len, str){
+                if (str.length <= len || len == 0) {
+                    return str;
+                }
+                var recortada = str.substr(0, len);
+                return recortada.substr(0, Math.min(recortada.length, recortada.lastIndexOf(' '))) + '...';
+
+            },
+        });
+    </script>
+</dom-module>
